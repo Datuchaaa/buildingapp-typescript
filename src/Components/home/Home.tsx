@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -8,45 +8,72 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Badge from "@mui/material/Badge";
 import Avatar from "@mui/material/Avatar";
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
-import Stack from '@mui/material/Stack';
-import SvgIcon from '@mui/material/SvgIcon';
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
+import SvgIcon from "@mui/material/SvgIcon";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Slider from "@mui/material/Slider";
+import Carousel from "react-material-ui-carousel"; // Import the Carousel component
+
+const images = [
+  "https://via.placeholder.com/300",
+  "https://via.placeholder.com/300",
+  "https://via.placeholder.com/303",
+  // Add more image URLs here
+];
 
 const Home: React.FC = () => {
-  return (
-    <AppBar position="static">
-      <Toolbar>
-        <IconButton edge="start" color="inherit" aria-label="menu">
-          <MenuIcon />
-        </IconButton>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          My App
-        </Typography>
-        <Box
-        sx={{
-          borderColor: 'neutral.300',
-          borderStyle: 'dashed',
-          borderWidth: 1,
-          height: 300,
-          p: '4px',
-        }}
-      />
+  const [fontSize, setFontSize] = useState(20);
 
-        <IconButton color="inherit">
-          <Badge badgeContent={2} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <IconButton color="inherit">
-          <Avatar>
-            <AccountCircleIcon />
-          </Avatar>
-        </IconButton>
-      </Toolbar>
-    </AppBar>
+  const handleSliderChange = (event: Event, newValue: number | number[]) => {
+    setFontSize(newValue as number);
+  };
+
+  return (
+    <div>
+      <AppBar position="static">
+        {/* ... App bar content ... */}
+      </AppBar>
+      <Container>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6}>
+            {/* ... Button stack ... */}
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Card>
+              <CardContent>
+                <Typography
+                  variant="h6"
+                  component="div"
+                  style={{ fontSize: `${fontSize}px` }}
+                >
+                  Dynamic Font Size
+                </Typography>
+              </CardContent>
+            </Card>
+            <Slider
+              aria-label="slider"
+              value={fontSize}
+              onChange={handleSliderChange}
+              min={10}
+              max={50}
+            />
+            <Carousel>
+              {images.map((image, index) => (
+                <Card key={index}>
+                  <CardMedia component="img" height="140" image={image} />
+                </Card>
+              ))}
+            </Carousel>
+          </Grid>
+        </Grid>
+      </Container>
+    </div>
   );
 };
 
